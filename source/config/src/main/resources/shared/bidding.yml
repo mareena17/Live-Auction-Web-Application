@@ -1,0 +1,74 @@
+security:
+  oauth2:
+    client:
+      clientId: auction-service
+      clientSecret: ${BIDDING_PASSWORD}
+      accessTokenUri: https://auth-service:5000/uaa/oauth/token
+      grant-type: client_credentials
+      scope: server
+
+server:
+  servlet:
+    context-path: /bids
+  port: 8050
+  ssl:
+    enabled: true
+    key-store: classpath:keystore-bid.jks
+    key-store-password: black123
+    key-store-type: JKS
+    # trust-store: classpath:truststore.jks
+    # trust-store-type: JKS
+    # trust-store-password: changeit
+    key-alias: bidding
+
+spring:
+  rabbitmq:
+    listener:
+      simple: 
+        concurrency: 4
+        max-concurrency: 8
+        retry:
+          initial-interval: 5000
+  datasource:
+    url: jdbc:postgresql://postgresql:5432/liveauctionbid
+    username: postgres
+    password: black
+    driver-class-name: org.postgresql.Driver
+  jpa:
+      properties:
+        hibernate:
+          temp:
+            use_jdbc_metadata_defaults: false
+      hibernate:
+        ddl-auto: create
+        jdbc:
+          lob:
+            non_contextual_creation: true
+        cache:
+          use_query_cache: true
+          use_second_level_cache: true
+          hazelcast:
+            use_native_client: true
+            native_client_address: http://hazelcast:5701
+            native_client_group: hz-compose
+            native_client_password: s3crEt
+          region:
+            factory_class: com.hazelcast.hibernate.HazelcastCacheRegionFactory
+      show-sql: true
+      database: postgresql
+      database-platform: org.hibernate.dialect.PostgreSQLDialect
+      open-in-view: false
+      generate-ddl: false
+      # jadira:
+      #   usertype:
+      #     autoRegisterUserTypes: true
+hazelcast:
+  member:
+    address: hazelcast
+
+exchange:
+  name: bidding
+  messageQueue: bid
+  ackQueue: latestbid
+  messageRoutingKey: key1
+  ackRoutingKey: key2

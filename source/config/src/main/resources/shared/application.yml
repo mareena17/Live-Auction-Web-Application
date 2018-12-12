@@ -1,0 +1,62 @@
+logging:
+  level:
+    org.springframework.security: DEBUG
+    com.bidbig.account.client.AuthServiceClient: DEBUG
+
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 20000
+
+eureka:
+  instance:
+    prefer-ip-address: true
+    nonSecurePortEnabled: false
+    securePortEnabled: true
+    securePort: ${server.port}
+    statusPageUrl: https://localhost:${server.port}/info
+    healthCheckUrl: https://localhost:${server.port}/health
+    homePageUrl: https://localhost:${server.port}
+  client:
+    serviceUrl:
+      defaultZone: https://registry:8761/eureka/
+
+security:
+  oauth2:
+    resource:
+      user-info-uri: https://auth-service:5000/uaa/users/current
+
+spring:
+  rabbitmq:
+    host: rabbitmq
+
+feign:
+  client:
+    config:
+      default:
+        connectTimeout: 30000
+        readTimeout: 30000
+  compression:
+    request:
+      enabled: true
+      mime-types: application/json,application/xml,text/html,text/xml,text/plain,application/javascript,image/gif,image/jpeg
+    response:
+      enabled: true
+
+
+# management:
+#   endpoints:
+#     web:
+#       exposure:
+#         include: "*"  #<2>
+#   endpoint:
+#     health:
+#       show-details: ALWAYS
+
+server:
+  compression:
+    enabled: true
+    mime-types: application/json,application/xml,text/html,text/xml,text/plain,application/javascript,image/gif,image/jpeg

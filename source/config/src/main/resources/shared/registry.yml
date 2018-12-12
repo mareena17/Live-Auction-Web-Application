@@ -1,0 +1,11 @@
+server:
+  port: 8761
+  ssl:
+    enabled: true
+    key-store: classpath:keystore-eureka.jks
+    key-store-password: black123
+    key-store-type: JKS
+    # trust-store: classpath:truststore.jks
+    # trust-store-type: JKS
+    # trust-store-password: changeit
+    key-alias: registry

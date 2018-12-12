@@ -1,0 +1,62 @@
+For account service
+keytool -genkeypair -alias account-service -keyalg RSA -keysize 2048 -storetype JKS -keystore keystore.jks -validity 3650
+
+keytool -export -alias account-service -storepass black123 -file account.cer -keystore keystore.jks
+
+keytool -import -file account.cer -alias account-service -keystore truststore.jks -storepass changeit
+
+For auth service
+keytool -genkeypair -alias auth-service -keyalg RSA -keysize 2048 -storetype JKS -keystore keystore-auth.jks -validity 3650
+
+keytool -export -alias auth-service -storepass black123 -file auth.cer -keystore keystore-auth.jks
+
+keytool -import -file auth.cer -alias auth-service -keystore truststore.jks -storepass changeit
+
+For eureka service
+keytool -genkeypair -alias registry -keyalg RSA -keysize 2048 -storetype JKS -keystore keystore-eureka.jks -validity 3650
+
+keytool -export -alias registry -storepass black123 -file eureka.cer -keystore keystore-eureka.jks
+
+keytool -import -file eureka.cer -alias registry -keystore truststore.jks -storepass changeit
+
+
+For notification service
+keytool -genkeypair -alias notification-service -keyalg RSA -keysize 2048 -storetype JKS -keystore keystore-ns.jks -validity 3650
+
+keytool -export -alias notification-service -storepass black123 -file ns.cer -keystore keystore-ns.jks
+
+keytool -import -file ns.cer -alias notification-service -keystore truststore.jks -storepass changeit
+
+For bidding service
+keytool -genkeypair -alias bidding -keyalg RSA -keysize 2048 -storetype JKS -keystore keystore-bid.jks -validity 3650
+
+keytool -export -alias bidding -storepass black123 -file bid.cer -keystore keystore-bid.jks
+
+keytool -import -file bid.cer -alias bidding -keystore truststore.jks -storepass changeit
+
+For auction service
+keytool -genkeypair -alias auction-service -keyalg RSA -keysize 2048 -storetype JKS -keystore keystore-auction.jks -validity 3650
+
+keytool -export -alias auction-service -storepass black123 -file auc.cer -keystore keystore-auction.jks
+
+keytool -import -file auc.cer -alias auction-service -keystore truststore.jks -storepass changeit
+
+For items service
+keytool -genkeypair -alias items-service -keyalg RSA -keysize 2048 -storetype JKS -keystore keystore-items.jks -validity 3650
+
+keytool -export -alias items-service -storepass black123 -file items.cer -keystore keystore-items.jks
+
+keytool -import -file items.cer -alias items-service -keystore truststore.jks -storepass changeit
+
+For gateway
+keytool -genkeypair -alias gateway -keyalg RSA -keysize 2048 -storetype JKS -keystore keystore-gateway.jks -validity 3650
+
+keytool -export -alias gateway -storepass black123 -file gateway.cer -keystore keystore-gateway.jks
+
+keytool -import -file gateway.cer -alias items-service -keystore truststore.jks -storepass changeit
+
+
+ keytool -genkey -alias localhost -storetype PKCS12 -keyalg RSA -keysize 2048 -keystore localhost.p12 -validity 3650
+
+
+/usr/lib/jvm/java-8-openjdk-amd64/jre/lib/security

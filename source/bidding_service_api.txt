@@ -1,0 +1,246 @@
+POST Bid
+http://localhost/bids/new
+payload json
+{
+	"userId": "uj89",
+	"auctionId": 1,
+	"itemId": 1,
+	"amount": 78,
+	"created": 1543806960242
+}
+
+Response 200 OK
+
+
+Highest bid GET
+http://localhost/bids/highest/{auctionId}
+
+Response
+78
+
+All bid for item GET
+http://localhost/bids/all/{itemId}
+Response
+[
+    {
+        "userId": "uj80",
+        "auctionId": 1,
+        "itemId": 1,
+        "amount": 68,
+        "status": "PENDING",
+        "created": "2018-12-03T03:16:00.242Z"
+    },
+    {
+        "userId": "uj89",
+        "auctionId": 1,
+        "itemId": 1,
+        "amount": 78,
+        "status": "PENDING",
+        "created": "2018-12-03T03:16:00.242Z"
+    }
+]
+
+
+Login
+https://localhost/uaa/oauth/token  
+url-encoded form post {username, password, grant_type=password}
+Heaaders
+Authorization : Basic XYZABsdsd
+
+Response
+{
+    "access_token": "66168c84-4cd0-40c2-9ce4-73b7607f36bb",
+    "token_type": "bearer",
+    "refresh_token": "63779bb3-0017-47e3-a443-cca8397d665d",
+    "expires_in": 43199,
+    "scope": "ui"
+}
+
+Register
+https://localhost:6000/accounts/
+Request JSON
+{
+	"user" :{
+		"username": "uja9",
+		"password": "black@123",
+		"email": "umishra1771@gmail.com"
+	},
+	"profile": {
+		"name": "Ujjwal",
+		"address":"NOP",
+		"city": "Dallas",
+		"zip": 75252
+	}
+}
+Response
+{
+    "name": "uja9",
+    "lastSeen": "2018-12-06T02:36:14.322+0000",
+    "profile": {
+        "id": 0,
+        "name": "Ujjwal",
+        "address": "NOP",
+        "city": "Dallas",
+        "zip": 75252
+    }
+}
+
+Get logged in uer profile
+GET https://localhost/accounts/current
+Authorization Heaaders with token
+Response
+{
+    "name": "uja89",
+    "lastSeen": "2018-11-22T20:22:47.732+0000",
+    "profile": {
+        "id": 1,
+        "name": "Ujjwal",
+        "address": "NOP",
+        "city": null,
+        "zip": null
+    }
+}
+
+Update profile
+PUT https://localhost/accounts/current
+Authorization Heaaders with token
+Request pyalod json
+{
+    "name": "uja89",
+    "lastSeen": "2018-11-22T20:22:47.732+0000",
+    "profile": {
+        "id": 1,
+        "name": "Ujjwal",
+        "address": "NOP",
+        "city": null,
+        "zip": null
+    }
+}
+reposne 
+200 OK
+
+
+Password reset buton
+POST 
+https://localhost/uaa/users/reset
+JSON payload
+{
+	"username" : "uja89"
+}
+Response
+200 OK
+
+Password resseting page
+POST
+JSON payload
+{
+ "token": "e9d63ba9-a428-42f6-9f7f-ce5fa845103e", //token in email
+ "username": "uja89",
+ "password": "black123" //new password
+}
+Response
+200 OK
+
+
+Create auction
+https://localhost/auctions/create   POST
+Request paylaod json
+{
+	"auctionDate": 1543449600000,
+	"startTime": 1543420800000,
+	"endTime": 1543449600000,
+	"slots": 8
+	
+}
+
+Response
+200 OK
+
+List auction
+https://localhost/auctions/list POST
+payload
+{
+	"startDate": 1544101931363,
+	"endDate": 1544142931463
+	
+}
+
+Response
+[
+    {
+        "id": 1,
+        "itemId": null,
+        "startTime": "2018-11-28T16:00:00.000Z",
+        "endTime": "2018-11-28T17:00:00.000Z",
+        "auctionDate": "2018-12-07T00:12:29.136+0000"
+    },
+    {
+        "id": 2,
+        "itemId": null,
+        "startTime": "2018-11-28T17:00:00.000Z",
+        "endTime": "2018-11-28T18:00:00.000Z",
+        "auctionDate": "2018-12-07T00:12:29.378+0000"
+    },
+    {
+        "id": 3,
+        "itemId": null,
+        "startTime": "2018-11-28T18:00:00.000Z",
+        "endTime": "2018-11-28T19:00:00.000Z",
+        "auctionDate": "2018-12-07T00:12:29.394+0000"
+    },
+    {
+        "id": 4,
+        "itemId": null,
+        "startTime": "2018-11-28T19:00:00.000Z",
+        "endTime": "2018-11-28T20:00:00.000Z",
+        "auctionDate": "2018-12-07T00:12:29.410+0000"
+    },
+    {
+        "id": 5,
+        "itemId": null,
+        "startTime": "2018-11-28T20:00:00.000Z",
+        "endTime": "2018-11-28T21:00:00.000Z",
+        "auctionDate": "2018-12-07T00:12:29.425+0000"
+    },
+    {
+        "id": 6,
+        "itemId": null,
+        "startTime": "2018-11-28T21:00:00.000Z",
+        "endTime": "2018-11-28T22:00:00.000Z",
+        "auctionDate": "2018-12-07T00:12:29.442+0000"
+    },
+    {
+        "id": 7,
+        "itemId": null,
+        "startTime": "2018-11-28T22:00:00.000Z",
+        "endTime": "2018-11-28T23:00:00.000Z",
+        "auctionDate": "2018-12-07T00:12:29.468+0000"
+    },
+    {
+        "id": 8,
+        "itemId": null,
+        "startTime": "2018-11-28T23:00:00.000Z",
+        "endTime": "2018-11-29T00:00:00.000Z",
+        "auctionDate": "2018-12-07T00:12:29.485+0000"
+    }
+]
+
+
+Update Auction
+
+https://localhost/auctions/update POST
+payload json 
+    {
+        "id": 1,
+        "itemId": 2,
+        "startTime": "2018-11-28T16:00:00.000Z",
+        "endTime": "2018-11-28T17:00:00.000Z",
+        "auctionDate": "2018-12-07T01:06:54.458+0000"
+    }
+Response
+200 OK
+
+
+Items service
+
+https://localhost/items

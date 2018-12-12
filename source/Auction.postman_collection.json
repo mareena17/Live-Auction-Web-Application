@@ -1,0 +1,394 @@
+{
+	"info": {
+		"_postman_id": "e62a2ccd-14dc-4a20-b09b-659087bc41bc",
+		"name": "Auction",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "localhost/uaa/oauth/token",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Basic YnJvd3Nlcjo=",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "scope",
+							"value": "ui",
+							"type": "text"
+						},
+						{
+							"key": "username",
+							"value": "uja89",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "black123",
+							"type": "text"
+						},
+						{
+							"key": "grant_type",
+							"value": "password",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost/uaa/oauth/token",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"uaa",
+						"oauth",
+						"token"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Principal",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer 33cb01cf-1d5e-4679-a75d-d99d8a3dfa14",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "scope",
+							"value": "ui",
+							"type": "text"
+						},
+						{
+							"key": "username",
+							"value": "uj8890",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "black@123",
+							"type": "text"
+						},
+						{
+							"key": "grant_type",
+							"value": "password",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost/uaa/users/current",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"uaa",
+						"users",
+						"current"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Auth Princ",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer a17ec35f-2466-4da1-b89a-82cd72bc6df7",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "scope",
+							"value": "ui",
+							"type": "text"
+						},
+						{
+							"key": "username",
+							"value": "uj8890",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "black@123",
+							"type": "text"
+						},
+						{
+							"key": "grant_type",
+							"value": "password",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost/uaa/users/current",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"uaa",
+						"users",
+						"current"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Reseting",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer ea903afd-1518-45e0-9f8f-c95381cfb05c",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n \"token\": \"fc85e440-1c2d-446e-8a3a-c68a50986fa6\",\n \"username\": \"uja89\",\n \"password\": \"black123\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost/uaa/users/resetted",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"uaa",
+						"users",
+						"resetted"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Reset",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer ea903afd-1518-45e0-9f8f-c95381cfb05c",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"username\" : \"uja89\"\n}"
+				},
+				"url": {
+					"raw": "localhost/uaa/users/reset",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"uaa",
+						"users",
+						"reset"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Auctions",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer b20eb2b2-eb6e-4cbd-b8f4-c5ebb3cad074",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"auctionDate\": 1543449600000,\n\t\"startTime\": 1543420800000,\n\t\"endTime\": 1543449600000,\n\t\"slots\": 8\n\t\n}"
+				},
+				"url": {
+					"raw": "localhost/auctions/create",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"auctions",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create User",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Basic YnJvd3Nlcjo=",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"user\" :{\n\t\t\"username\": \"uja81\",\n\t\t\"password\": \"black@123\",\n\t\t\"email\": \"umishra1771@gmail.com\"\n\t},\n\t\"profile\": {\n\t\t\"name\": \"Ujjwal\",\n\t\t\"address\":\"NOP\",\n\t\t\"city\": \"Dallas\",\n\t\t\"zip\": 75252\n\t}\n}"
+				},
+				"url": {
+					"raw": "localhost/accounts/",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"accounts",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login Direct",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Basic YnJvd3Nlcjo=",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "scope",
+							"value": "ui",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "username",
+							"value": "uja88",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "black@123",
+							"type": "text"
+						},
+						{
+							"key": "grant_type",
+							"value": "password",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost/uaa/oauth/token",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"uaa",
+						"oauth",
+						"token"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

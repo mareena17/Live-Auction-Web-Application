@@ -1,0 +1,12 @@
+export ACCOUNT_SERVICE_PASSWORD=black
+export CONFIG_SERVICE_PASSWORD=black
+export MONGODB_PASSWORD=black
+
+
+mongo -u "user" -p "black" --authenticationDatabase "piggymetrics"
+
+
+mvn clean install -Dmaven.test.skip=true \
+      -Dmaven.site.skip=true -Dmaven.javadoc.skip=true
+
+mvn clean package -Dmaven.test.skip=true -Dmaven.site.skip=true -Dmaven.javadoc.skip=true      

@@ -1,0 +1,54 @@
+security:
+  oauth2:
+    client:
+      clientId: auth-service
+      clientSecret: ${AUTH_SERVICE_PASSWORD}
+      accessTokenUri: https://auth-service:5000/uaa/oauth/token
+      grant-type: client_credentials
+      scope: server
+    resource:
+      filter-order: 3
+
+spring:
+  datasource:
+    url: jdbc:postgresql://postgresql:5432/liveauctionauth
+    username: postgres
+    password: black
+    driver-class-name: org.postgresql.Driver
+  jpa:
+      properties:
+        hibernate:
+          temp:
+            use_jdbc_metadata_defaults: false
+      hibernate:
+        ddl-auto: update
+        jdbc:
+          lob:
+            non_contextual_creation: true
+      show-sql: true
+      database: postgresql
+      database-platform: org.hibernate.dialect.PostgreSQLDialect
+      open-in-view: false
+      generate-ddl: false
+
+
+server:
+  servlet:
+    context-path: /uaa
+  port: 5000
+  ssl:
+    enabled: true
+    key-store: classpath:keystore-auth.jks
+    key-store-password: black123
+    key-store-type: JKS
+    # trust-store: classpath:truststore.jks
+    # trust-store-type: JKS
+    # trust-store-password: changeit
+    key-alias: auth-service
+
+feign:
+  okhttp:
+    enabled: true
+
+domain: https://localhost:1500/
+

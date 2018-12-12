@@ -1,0 +1,12 @@
+spring:
+  application:
+    name: items-service
+  cloud:
+    config:
+      uri: http://config:8888
+      fail-fast: true
+      password: black
+      username: user
+
+file:
+  upload-dir: "./items/src/main/resources/item-images"

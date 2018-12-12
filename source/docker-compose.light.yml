@@ -1,0 +1,191 @@
+version: '2.1'
+services:
+  rabbitmq:
+    image: rabbitmq:3-management
+    restart: always
+    ports:
+      - 15672:15672
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "10"
+
+  config:
+    environment:
+      CONFIG_SERVICE_PASSWORD: $CONFIG_SERVICE_PASSWORD
+    image: bidbig/bidbig-config
+    restart: always
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "10"
+
+  registry:
+    environment:
+      CONFIG_SERVICE_PASSWORD: $CONFIG_SERVICE_PASSWORD
+    image: bidbig/bidbig-registry
+    restart: always
+    depends_on:
+      config:
+        condition: service_healthy
+    ports:
+      - 8761:8761
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "10"
+
+  gateway:
+    environment:
+      CONFIG_SERVICE_PASSWORD: $CONFIG_SERVICE_PASSWORD
+    image: bidbig/bidbig-gateway
+    restart: always
+    depends_on:
+      config:
+        condition: service_healthy
+    ports:
+      - 443:4000
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "10"
+
+  auth-service:
+    environment:
+      CONFIG_SERVICE_PASSWORD: $CONFIG_SERVICE_PASSWORD
+      ACCOUNT_SERVICE_PASSWORD: $ACCOUNT_SERVICE_PASSWORD
+      POSTGRESQL_PASSWORD: $POSTGRESQL_PASSWORD
+    image: bidbig/bidbig-auth-service
+    restart: always
+    depends_on:
+      config:
+        condition: service_healthy
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "10"
+
+  account-service:
+    environment:
+      - JAVA_OPTS=-Dhazelcast.member.address=hazelcast -Dgroup.name=hz-compose -Dgroup.password=s3crEt 
+      - CONFIG_SERVICE_PASSWORD=$CONFIG_SERVICE_PASSWORD
+      - ACCOUNT_SERVICE_PASSWORD=$ACCOUNT_SERVICE_PASSWORD
+      - MONGODB_PASSWORD=$MONGODB_PASSWORD
+      - POSTGRESQL_PASSWORD=$POSTGRESQL_PASSWORD
+    image: bidbig/bidbig-account-service
+    restart: always
+    depends_on:
+      config:
+        condition: service_healthy
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "10"
+
+  notification-service:
+    environment:
+      CONFIG_SERVICE_PASSWORD: $CONFIG_SERVICE_PASSWORD
+      MONGODB_PASSWORD: $MONGODB_PASSWORD
+      NOTIFICATION_SERVICE_PASSWORD: $NOTIFICATION_SERVICE_PASSWORD
+    image: bidbig/bidbig-notification-service
+    restart: always
+    depends_on:
+      config:
+        condition: service_healthy
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "10"
+
+  bidding:
+    environment:
+      - JAVA_OPTS=-Dhazelcast.member.address=hazelcast -Dgroup.name=hz-compose -Dgroup.password=s3crEt 
+      - CONFIG_SERVICE_PASSWORD= $CONFIG_SERVICE_PASSWORD
+      - BIDDING_PASSWORD= $BIDDING_PASSWORD
+      - POSTGRESQL_PASSWORD= $POSTGRESQL_PASSWORD
+    image: bidbig/bidbig-bidding-service
+    restart: always
+    depends_on:
+      config:
+        condition: service_healthy
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "10"
+
+  notification-mongodb:
+    image: bidbig/bidbig-mongodb
+    restart: always
+    environment:
+      MONGODB_PASSWORD: $MONGODB_PASSWORD
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "10"
+
+  postgresql:
+    image: postgres
+    volumes:
+      - ./db:/docker-entrypoint-initdb.d
+    ports:
+    - "5432:5432"
+    environment:
+      POSTGRES_MULTIPLE_DATABASES: 'liveauction,liveauctionauth,liveauctionauction,liveauctionbid,liveauctionitems'
+      POSTGRES_PASSWORD: $POSTGRESQL_PASSWORD
+      POSTGRES_USER: postgres
+
+  auction-service:
+    image: bidbig/bidbig-auction
+    environment:
+      - JAVA_OPTS=-Dhazelcast.member.address=hazelcast -Dgroup.name=hz-compose -Dgroup.password=s3crEt 
+      - CONFIG_SERVICE_PASSWORD=$CONFIG_SERVICE_PASSWORD
+      - AUCTION_SERVICE_PASSWORD=$AUCTION_SERVICE_PASSWORD
+      - POSTGRESQL_PASSWORD=$POSTGRESQL_PASSWORD
+    restart: always
+    depends_on:
+      config:
+        condition: service_healthy
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "10"
+
+  items-service:
+    image: bidbig/bidbig-items
+    environment:
+      - JAVA_OPTS=-Dhazelcast.member.address=hazelcast -Dgroup.name=hz-compose -Dgroup.password=s3crEt 
+      - CONFIG_SERVICE_PASSWORD=$CONFIG_SERVICE_PASSWORD
+      - ITEMS_SERVICE_PASSWORD=$ITEMS_SERVICE_PASSWORD
+      - POSTGRESQL_PASSWORD=$POSTGRESQL_PASSWORD
+    restart: always
+    depends_on:
+      config:
+        condition: service_healthy
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "10"
+
+  hazelcast:
+    image: hazelcast/hazelcast
+    volumes:
+      - ./hazlecast:/configFolder
+    environment:
+      - JAVA_OPTS=-Dhazelcast.config=/configFolder/hazelcast.xml -Dhazelcast.mancenter.url=http://mancenter:8080/hazelcast-mancenter -Dgroup.name=hz-compose -Dgroup.password=s3crEt
+    # ports:
+    #   - 5701:5701
+    links:
+      - "mancenter:mancenter"  
+
+  mancenter:
+    image: hazelcast/management-center
+    # persisting mancenter users db folder to local disk
+    volumes:
+      - ~/mancenter3.8:/mancenter-3.8
+    environment:
+      - MANCENTER_DATA=/mancenter-3.8
+        # enable REST interface on management center
+        # http://docs.hazelcast.org/docs/latest-development/manual/html/Management/Clustered_REST_via_Management_Center.html
+      - JAVA_OPTS=-Dhazelcast.mc.rest.enabled=true
+    ports:
+      - 8080:8080
